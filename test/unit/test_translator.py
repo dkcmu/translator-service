@@ -16,17 +16,38 @@ from mock import patch
 #     assert is_english == True
 #     assert translated_content == "What are you blokes yapping about?"
 
-def test_llm_normal_response():
-    pass
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
+@patch('vertexai.preview.language_models.ChatModel.start_chat')
+@patch('vertexai.preview.language_models._PreviewChatSession')
+@patch('vertexai.preview.language_models.ChatModel')
+@patch('vertexai.preview.language_models.ChatModel.from_pretrained')
+def test_llm_normal_response(mocker_pretrained, mocker_chat_model, mocker_preview_chat_session, mocker_start_chat, mocker_send_message):
+    mocker_pretrained.return_value = mocker_chat_model
+    mocker_start_chat.return_value = mocker_preview_chat_session
+    mocker_send_message.return_value.text = "(True,hello)"
+
+    assert query_llm_robust("hello") == (True, "hello")
 
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
-# @patch('google.generativeai.generative_models.GenerativeModel.send_message')
-def test_llm_gibberish_response(mocker):
-    # we mock the model's response to return a random message
-    default_res = "(True, <LangError>: Post text LLM response is malformed)"
+@patch('vertexai.preview.language_models.ChatModel.start_chat')
+@patch('vertexai.preview.language_models._PreviewChatSession')
+@patch('vertexai.preview.language_models.ChatModel')
+@patch('vertexai.preview.language_models.ChatModel.from_pretrained')
+def test_llm_gibberish_response(mocker_pretrained, mocker_chat_model, mocker_preview_chat_session, mocker_start_chat, mocker_send_message):
+    # mocker_pretrained.return_value = mocker_chat_model
+    # mocker_start_chat.return_value = mocker_preview_chat_session
+    # mocker_send_message.return_value.text = "malformed"
 
-    mocker.return_value.text = "I don't understand your request"
-    assert translate_content("Aquí está su primer ejemplo.") == default_res
+    # assert query_llm_robust("malformed") == (True, "<LangError>: Post text LLM response is malformed")
+
+    mocker_pretrained.return_value = mocker_chat_model
+    mocker_start_chat.return_value = mocker_preview_chat_session
+    mocker_send_message.return_value.text = "(False,-)"
+
+    assert query_llm_robust("DAFOEWGAIB WODFfjdskl aisdfow") == (False, "-")
+
+    # # we mock the model's response to return a random message
+    # mocker.return_value.text = "(True, <LangError>: Post text LLM response is malformed)"
 
     # # TODO assert the expected behavior
     # response1 = translate_content("Aquí está su primer ejemplo.")
