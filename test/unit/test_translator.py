@@ -32,6 +32,6 @@ def test_llm_gibberish_response(mocker_from_pretrained, mocker_chat_model, mocke
 
     mocker_from_pretrained.return_value = mocker_chat_model
     mocker_start_chat.return_value = mocker_preview_chat_session
-    mocker_send_message.return_value.text = "(False, '-')"
+    mocker_send_message.return_value.text = "(False,-)"
 
     assert translate_content("DAFOEWGAIB WODFfjdskl aisdfow") == (False, "-")
