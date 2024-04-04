@@ -1,5 +1,5 @@
 import vertexai
-from src.translator import translate_content #, CONTEXT
+from src.translator import translate_content, fullExtract #, CONTEXT
 from mock import patch
 
 class Response:

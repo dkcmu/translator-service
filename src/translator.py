@@ -42,6 +42,25 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 #     text = string[8:-2] if boolVal else string[9:-2]
 #     return (boolVal, text)
 
+def fullExtract(string):
+  def lengthForm(s : str): (len(s) >= 10)
+  def tupleForm(s : str): (s[0] == '(' and s[-1] == ')')
+  def boolForm(s : str): (s[1:6] == "False" or s[1:6] == "True,")
+  def badForm(s : str): not (s == "(False, '-')")
+  criteria = [lengthForm(string), tupleForm(string), boolForm(string), badForm(string)]
+
+  # boolVal, translation = (response.candidates[0], response.candidates[1])
+
+  if False in criteria:
+    return (True, "<LangError>: Post text LLM response is malformed")
+
+  def extract(s : str):
+    boolVal = False if s[1:6] == "False" else True
+    text = s[8:-2] if boolVal else s[9:-2]
+    return (boolVal, text)
+
+  return extract(string)
+
 context3 = ("You are now going to function as a detailed translator. When given a input of text, you will ultimately return a Python"
             " tuple with two entries. Let the input text be represented through variable t. If the input text is in English, then return"
             " (True, t). Otherwise, I want you to identify what language t is in. If t is text in a known language, then let return"
@@ -83,4 +102,4 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
   return extract(string)
 
 def translate_content(content: str) -> tuple[bool, str]:
-    return query_llm_robust(content)
+    return fullExtract(query_llm_robust(content))
