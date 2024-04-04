@@ -54,7 +54,7 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
   TODO: Implement this
   '''
   chat_model = ChatModel.from_pretrained("chat-bison@001")
-  
+
   parameters = {
     "temperature": 0.7,  # Temperature controls the degree of randomness in token selection.
     "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
@@ -79,6 +79,7 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
     text = s[8:-2] if boolVal else s[9:-2]
     return (boolVal, text)
 
+  print(string)
   return extract(string)
 
 def translate_content(content: str) -> tuple[bool, str]:
