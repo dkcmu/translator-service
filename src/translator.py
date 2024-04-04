@@ -95,7 +95,7 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
 
   def extract(s : str):
     boolVal = False if s[1:6] == "False" else True
-    text = s[6:-1] if boolVal else s[7,-1]
+    text = s[6:-1] if boolVal else s[7:-1]
     return (boolVal, text)
 
 #   print(string)
