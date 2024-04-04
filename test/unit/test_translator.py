@@ -1,6 +1,10 @@
 from src.translator import translate_content #, CONTEXT
 from mock import patch
 
+class Response:
+    def __init__(self, text):
+        self.text = text
+        
 # def test_chinese():
 #     is_english, translated_content = translate_content("这是一条中文消息")
 #     assert is_english == False
@@ -21,8 +25,8 @@ from mock import patch
 @patch('vertexai.preview.language_models._PreviewChatSession')
 @patch('vertexai.preview.language_models.ChatModel')
 @patch('vertexai.preview.language_models.ChatModel.from_pretrained')
-def test_llm_normal_response(mocker_pretrained, mocker_chat_model, mocker_preview_chat_session, mocker_start_chat, mocker_send_message):
-    mocker_pretrained.return_value = mocker_chat_model
+def test_llm_normal_response(mocker_from_pretrained, mocker_chat_model, mocker_preview_chat_session, mocker_start_chat, mocker_send_message):
+    mocker_from_pretrained.return_value = mocker_chat_model
     mocker_start_chat.return_value = mocker_preview_chat_session
     mocker_send_message.return_value.text = "(True,hello)"
 
@@ -33,16 +37,16 @@ def test_llm_normal_response(mocker_pretrained, mocker_chat_model, mocker_previe
 @patch('vertexai.preview.language_models._PreviewChatSession')
 @patch('vertexai.preview.language_models.ChatModel')
 @patch('vertexai.preview.language_models.ChatModel.from_pretrained')
-def test_llm_gibberish_response(mocker_pretrained, mocker_chat_model, mocker_preview_chat_session, mocker_start_chat, mocker_send_message):
+def test_llm_gibberish_response(mocker_from_pretrained, mocker_chat_model, mocker_preview_chat_session, mocker_start_chat, mocker_send_message):
     # mocker_pretrained.return_value = mocker_chat_model
     # mocker_start_chat.return_value = mocker_preview_chat_session
     # mocker_send_message.return_value.text = "malformed"
 
     # assert query_llm_robust("malformed") == (True, "<LangError>: Post text LLM response is malformed")
 
-    mocker_pretrained.return_value = mocker_chat_model
+    mocker_from_pretrained.return_value = mocker_chat_model
     mocker_start_chat.return_value = mocker_preview_chat_session
-    mocker_send_message.return_value.text = "(False,-)"
+    mocker_send_message.return_value.text = "(False, '-')"
 
     assert translate_content("DAFOEWGAIB WODFfjdskl aisdfow") == (False, "-")
 
