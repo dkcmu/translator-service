@@ -1,10 +1,11 @@
+import vertexai
 from src.translator import translate_content #, CONTEXT
 from mock import patch
 
 class Response:
     def __init__(self, text):
         self.text = text
-        
+
 # def test_chinese():
 #     is_english, translated_content = translate_content("这是一条中文消息")
 #     assert is_english == False

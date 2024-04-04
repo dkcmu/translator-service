@@ -1,5 +1,7 @@
 Flask==3.0.0
 pytest==7.4.0
-google.cloud.aiplatform
-google-auth
+google-cloud-aiplatform
 mock
+vertexai
+ipytest
+pytest-mock
