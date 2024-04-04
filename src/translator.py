@@ -86,9 +86,9 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
 #   }
 #   chat = chat_model.start_chat(context=context3)
 #   response = chat.send_message(post, **parameters)
-  eror_result = (True, '<LangError>: Post text LLM response is malformed')
+  error_result = (True, '<LangError>: Post text LLM response is malformed')
 
-  langauge = get_language(post)
+  language = get_language(post)
   if type(language) != str or language != '':
     # Failed to get language
     return error_result
