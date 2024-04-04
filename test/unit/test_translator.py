@@ -26,7 +26,7 @@ def test_llm_normal_response(mocker_pretrained, mocker_chat_model, mocker_previe
     mocker_start_chat.return_value = mocker_preview_chat_session
     mocker_send_message.return_value.text = "(True,hello)"
 
-    assert query_llm_robust("hello") == (True, "hello")
+    assert translate_content("hello") == (True, "hello")
 
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 @patch('vertexai.preview.language_models.ChatModel.start_chat')
@@ -44,7 +44,7 @@ def test_llm_gibberish_response(mocker_pretrained, mocker_chat_model, mocker_pre
     mocker_start_chat.return_value = mocker_preview_chat_session
     mocker_send_message.return_value.text = "(False,-)"
 
-    assert query_llm_robust("DAFOEWGAIB WODFfjdskl aisdfow") == (False, "-")
+    assert translate_content("DAFOEWGAIB WODFfjdskl aisdfow") == (False, "-")
 
     # # we mock the model's response to return a random message
     # mocker.return_value.text = "(True, <LangError>: Post text LLM response is malformed)"
