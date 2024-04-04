@@ -106,4 +106,4 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
   return (lang_check, translation)
 
 def translate_content(content: str) -> tuple[bool, str]:
-    return query_llm_robust(post)
+    return query_llm_robust(content)
