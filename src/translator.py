@@ -64,7 +64,7 @@ def fullExtract(string):
 context3 = ("You are now going to function as a detailed translator. When given a input of text, you will ultimately return a"
             " tuple with two entries. Let the input text be represented through variable t. If the input text is in English, then return"
             " (True, t). Otherwise, I want you to identify what language t is in. If t is text in a known language, then let return"
-            " (False, p) where p is the English translation of t. If t is not in an identifiable language, return (False, '-').")
+            " (False, p) where p is the English translation of t. If t is not in an identifiable language, return (False,-).")
 
 # If the input text is in English, then return (True, input_text). If the input text is not in english, but is in a known language, return 
 # (False, translation of input text). If it is not able to indentify the language or the translation return (True, error)
@@ -95,12 +95,12 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
 
   def extract(s : str):
     boolVal = False if s[1:6] == "False" else True
-    text = s[8:-2] if boolVal else s[9:-2]
+    text = s[7:-1]
     return (boolVal, text)
 
 #   print(string)
 #   return extract(string)
-  return string
+  return extract(string)
 
 def translate_content(content: str) -> tuple[bool, str]:
     return query_llm_robust(content)
