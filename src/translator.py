@@ -102,7 +102,7 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
   
   print(f"Language: {language}, Translation: {translation}")
 
-  lang_check = langauge == 'english'
+  lang_check = language == 'english'
   return (lang_check, translation)
 
 def translate_content(content: str) -> tuple[bool, str]:
