@@ -2,7 +2,7 @@
 # import os
 # from google.colab import userdata  #Used to securely store API Key
 
-import bigframes.dataframe
+# import bigframes.dataframe
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 from google.cloud import aiplatform
 from google.auth.credentials import Credentials
