@@ -85,7 +85,7 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
   def lengthForm(s : str): (len(s) >= 10)
   def tupleForm(s : str): (s[0] == '(' and s[-1] == ')')
   def boolForm(s : str): (s[1:6] == "False" or s[1:6] == "True,")
-  def badForm(s : str): not (s == "(False, '-')")
+  def badForm(s : str): not (s == "(False,-)")
   criteria = [lengthForm(string), tupleForm(string), boolForm(string), badForm(string)]
 
   # boolVal, translation = (response.candidates[0], response.candidates[1])
@@ -95,7 +95,7 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
 
   def extract(s : str):
     boolVal = False if s[1:6] == "False" else True
-    text = s[7:-1]
+    text = s[6:-1]
     return (boolVal, text)
 
 #   print(string)
