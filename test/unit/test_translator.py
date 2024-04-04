@@ -50,6 +50,6 @@ def test_spanish_response(mocker_from_pretrained, mocker_chat_model, mocker_prev
 
     mocker_from_pretrained.return_value = mocker_chat_model
     mocker_start_chat.return_value = mocker_preview_chat_session
-    mocker_send_message.return_value.text = "(True,Testing the new translation feature)"
+    mocker_send_message.return_value.text = "(False,Testing the new translation feature)"
 
     assert translate_content("Probando la nueva función de traducción") == (False, "Testing the new translation feature")
