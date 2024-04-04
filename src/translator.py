@@ -10,7 +10,7 @@ from google.oauth2 import service_account
 
 PROJECT_ID = "nodebb-417218"
 
-credentials, project = google.auth.default()
+# credentials, project = google.auth.default()
 
 # credentials = Credentials.from_service_account_info({
 #     "type": "service_account",
@@ -31,11 +31,11 @@ aiplatform.init(
   project=PROJECT_ID,
 
   # credentials
-  credentials=credentials,
+  # credentials=credentials,
 )
 
-GOOGLE_API_KEY=userdata.get('GOOGLE_API_KEY')
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+# GOOGLE_API_KEY=userdata.get('GOOGLE_API_KEY')
+# GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 # genai.configure(api_key=GOOGLE_API_KEY)
 
 # LLM Settings
@@ -54,7 +54,7 @@ def get_translation(post: str) -> str:
   }
 
   # ---------------- YOUR CODE HERE ---------------- #
-  chat = chat_model.start_chat(context=context1)
+  chat = chat_model.start_chat(context=get_translation_context)
   response = chat.send_message(post, **parameters)
   return response.text
 
@@ -73,7 +73,7 @@ def get_language(post: str) -> str:
   }
 
   # ---------------- YOUR CODE HERE ---------------- #
-  chat = chat_model.start_chat(context=context2)
+  chat = chat_model.start_chat(context=get_language_context)
   response = chat.send_message(post, **parameters)
   return response.text
 
